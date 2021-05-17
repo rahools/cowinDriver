@@ -1,4 +1,5 @@
 #%%
+from enum import auto
 from selenium import webdriver
 from .otpHelper import OTP
 import time
@@ -9,6 +10,9 @@ class CoWinDriver:
         self.driver = webdriver.Chrome()
         self.driver.get(regURL)
         assert "Co-WIN" in self.driver.title
+
+    def getDriver(self):
+        return self.driver
 
     def inputMobile(self, mobile):
         try:
@@ -47,36 +51,31 @@ class CoWinDriver:
     def autoBookingNav(self, state, district):
         try:
             # click schedule
-            scheduleElement = self.driver.find_element_by_xpath('/html/body/app-root/ion-app/ion-router-outlet/app-beneficiary-dashboard/ion-content/div/div/ion-grid/ion-row/ion-col/ion-grid[1]/ion-row[2]/ion-col/ion-grid/ion-row[4]/ion-col[2]/ul/li/a')
+            scheduleElement = self.driver.find_element_by_xpath("//a[@href = '/dashboard']")
             scheduleElement.click()
-            time.sleep(1)
-
-            # final schedule click
-            finalScheduleElement = self.driver.find_element_by_xpath('/html/body/app-root/ion-app/ion-router-outlet/app-beneficiary-dashboard/ion-content/div/div/ion-grid/ion-row/ion-col/ion-grid[1]/ion-row[4]/ion-col/div/div[2]/div/ion-button')
-            finalScheduleElement.click()
-            time.sleep(1)
+            time.sleep(3)
 
             # switch center selection to district
-            filterElement = self.driver.find_element_by_xpath('/html/body/app-root/ion-app/ion-router-outlet/app-appointment-table/ion-content/div/div/ion-grid/ion-row/ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col[2]/form/ion-grid/ion-row/ion-col[1]/div/label/div')
-            webdriver.ActionChains(self.driver).move_to_element_with_offset(filterElement, 249, 1).click().perform()
-            time.sleep(1)
+            filterElement = self.driver.find_element_by_css_selector('.status-switch')
+            filterElement.click()
+            time.sleep(3)
 
             # select state
-            stateElement = self.driver.find_element_by_xpath('//*[@id="mat-select-0"]')
+            stateElement = self.driver.find_elements_by_class_name('mat-select')[0]
             stateElement.click()
             stateElement = self.driver.find_element_by_xpath(f"//*[text() = ' {state} ']")
             stateElement.click()
-            time.sleep(1)
+            time.sleep(3)
 
             # select district
-            districtElement = self.driver.find_element_by_xpath('//*[@id="mat-select-2"]')
+            districtElement = self.driver.find_elements_by_class_name('mat-select')[1]
             districtElement.click()
             districtElement = self.driver.find_element_by_xpath(f"//*[text() = ' {district} ']")
             districtElement.click()
-            time.sleep(1)
+            time.sleep(3)
 
             # submit selection
-            submitElement = self.driver.find_element_by_xpath('/html/body/app-root/ion-app/ion-router-outlet/app-appointment-table/ion-content/div/div/ion-grid/ion-row/ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col[2]/form/ion-grid/ion-row/ion-col[2]/ion-row/ion-col[3]/ion-button')
+            submitElement = self.driver.find_element_by_xpath('//ion-button')
             submitElement.click()
             # time.sleep(1)
 
