@@ -9,9 +9,9 @@ if __name__ == '__main__':
     webdriver = driver.getDriver()
 
     mobileNumber = ''   # mobile Number
-    ip = ''             # Phone/airmore ip addr
-    state = ''          # State (Camel cased)
-    district = ''       # District (Camel cased)
+    ip = '192.168.x.x'             # Phone/airmore ipv4 addr
+    state = 'Madhya Pradesh'          # State (Camel cased w/ spaces eg: 'Madhya Pradesh')
+    district = 'Indore'       # District (Camel cased w/ spaces eg: 'Indore')
 
 
     driver.inputMobile(mobileNumber)
